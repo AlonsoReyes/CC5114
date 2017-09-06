@@ -12,12 +12,13 @@ test_data, train_data, test_expected, train_expected = get_prepared_split()
 
 eval = len(test_data)  # number of tests
 iters = 200  # range of epochs it will be trained on
-rate = 2.0
+rate = 2.0  # learning rate
 
-neurons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-layers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+neurons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]  # number of neurons for each layer to be tested with
+layers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]  # number of layers to be tested
 
 
+# base networks for each configuration possible with the arrays above
 test_networks = []
 for l in layers:
     nets = []
@@ -34,7 +35,7 @@ for l in layers:
 
 total = []
 
-
+# train with the different configurations of networks starting with the same base networks
 for num_layers in range(len(test_networks)):
     lay = test_networks[num_layers]
     layer_data = []
@@ -62,6 +63,7 @@ for num_layers in range(len(test_networks)):
 
 """
 ""
+# This is just to store the data if the test takes too long it needs to be plotted again
 with open('time_test_seed.pickle', 'wb') as handle:
     pickle.dump(total, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
@@ -76,7 +78,7 @@ time_array = []
 acc_array = []
 rate_array = []
 
-
+# collect the necessary data
 for layer in total:
     for sub in layer:
         layer_array.append(sub[0])

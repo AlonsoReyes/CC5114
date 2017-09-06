@@ -3,26 +3,28 @@ import matplotlib.pyplot as plt
 from Network.Network import *
 from tests.seeds_util import *
 
-net = Network(7)
-net.create_layer(5)
-net.create_layer(3)
-wb = net.get_network()
 
 # Gets the data in a format that the network understands it. For example the output [1] is [1, 0, 0]
 # This gets the data normalized too.
 test_data, train_data, test_expected, train_expected = get_prepared_split()
 
+eval = len(test_data)  # number of test data
+iters = 100  # maximum number of epochs to train with
+rate = 2.0  # learning rate
+
+# base network
+net = Network(7)
+net.create_layer(5)
+net.create_layer(3)
+wb = net.get_network()  # base weights and biases for the test
+
 n_iter = []
 acc_list = []
-net = Network()
-net.set_network(wb)
 
-eval = len(test_data)
-iters = 100
-rate = 2.0
-
+# get the error for each epoch
 err_arr, epoch_arr = net.train(train_data, train_expected, iters, rate)
 
+# train with different amout of epochs starting from the base network each time
 for k in range(iters):
     rights = 0
     net = Network()
@@ -38,6 +40,7 @@ for k in range(iters):
     acc_list.append(rights / eval)
 
 
+# plots two curves with different scales in the same figure
 fig, ax = plt.subplots()
 ax1, ax2 = two_scales(ax, epoch_arr, err_arr, acc_list, 'r', 'b', x_label='Epochs', y1_label='Error', y2_label='Accuracy')
 plt.title("Seeds dataset with {} test iterations".format(eval))

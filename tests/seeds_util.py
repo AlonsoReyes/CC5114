@@ -3,6 +3,7 @@ import math
 import random
 
 
+# Most of this methods are only applicable on the chosen dataset. Seeds dataset in the file seed.txt
 # For seeds data set
 def tsv_to_input_format(tsv_in='seed.txt'):
     with open(tsv_in, 'r') as tsvin:
