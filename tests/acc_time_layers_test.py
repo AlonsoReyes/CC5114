@@ -11,11 +11,11 @@ test_data, train_data, test_expected, train_expected = get_prepared_split()
 
 
 eval = len(test_data)  # number of tests
-iters = 200  # range of epochs it will be trained on
-rate = 2.0  # learning rate
+iters = 100  # range of epochs it will be trained on
+rate = 0.5  # learning rate
 
-neurons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]  # number of neurons for each layer to be tested with
-layers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]  # number of layers to be tested
+neurons = [1, 2, 3, 4, 5]#, 6, 7, 8, 9, 10]  # number of neurons for each layer to be tested with
+layers = [1, 2, 3, 4, 5]#, 6, 7, 8, 9, 10]  # number of layers to be tested
 
 
 # base networks for each configuration possible with the arrays above
@@ -52,7 +52,7 @@ for num_layers in range(len(test_networks)):
         for i in range(eval):
             r = net.predict(test_data[i])
             d = test_expected[i]
-            if r == [d.index(max(d))]:
+            if r == d.index(max(d)):
                 rights += 1
 
         acc = rights / eval

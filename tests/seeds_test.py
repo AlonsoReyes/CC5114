@@ -33,7 +33,7 @@ for k in range(iters):
     for i in range(eval):
         r = net.predict(test_data[i])
         d = test_expected[i]
-        if r == [d.index(max(d))]:
+        if r == d.index(max(d)):
             rights += 1
 
     n_iter.append(k)

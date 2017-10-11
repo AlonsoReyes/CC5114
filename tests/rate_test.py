@@ -33,7 +33,7 @@ for k in range(len(rates)):
     for i in range(eval):
         r = net.predict(test_data[i])
         d = test_expected[i]
-        if r == [d.index(max(d))]:
+        if r == d.index(max(d)):
             rights += 1
 
     acc_list.append(rights / eval)
