@@ -108,15 +108,21 @@ vector<char*> Guesser::selection(vector<char*> population) {
 		total_fit += current_fit;
 	}
 
+
+	for(int i = 0; i < population.size(); i++) {
+		individual_fit[i].second = individual_fit[i].second / total_fit;
+	}
+
 	sort(individual_fit.begin(), individual_fit.end(), pair_comp());
 	//accumulation and normalization
 	for(int i = 1; i < individual_fit.size(); i++) {
 		individual_fit[i].second += individual_fit[i-1].second;
 	}
 
-	for(int i = 0; i < population.size(); i++) {
-		individual_fit[i].second = individual_fit[i].second / total_fit;
-	}
+	for(int i = 0; i < individual_fit.size(); i++)
+		cout << individual_fit[i].second << endl;
+
+	
 
 	if(!(individual_fit[individual_fit.size() - 1].second <= 1.0 && 
 		individual_fit[individual_fit.size() - 1].second > 1.0 - 0.01)) {
