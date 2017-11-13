@@ -1,14 +1,9 @@
-
 #include "GA_tournament.h"
 
 
 using namespace std;
 
 
-struct pair_comp
-{
-    bool operator()(const pair<Network, double> &a, const pair<Network, double>  &b) { return (a.second > b.second); }
-};
 
 GA::GA(double goal, double rate, int pop_size, int iterations,
  vector<int> topology, TrainingSet data) {
@@ -22,6 +17,7 @@ GA::GA(double goal, double rate, int pop_size, int iterations,
 }
 
 
+// result is the accuracy on the testing set
 double GA::fitness(Network* net) {
 	return net->evaluateNet(this->test_data);
 }
@@ -47,9 +43,9 @@ Network GA::tournament_selection(vector<Network> population, int k) {
 }
 
 
-
+// has 5 options, multiply by a factor, sum or substract one, multiply by -1
+// change the weight for a random one or change the whole neuron.
 void GA::mutate(Network* net) {
-	//vector< vector< vector <double> > > base = net->getBaseNetwork();
 	int option;
 	int random_layer;
 	int random_neuron;
@@ -80,7 +76,8 @@ void GA::mutate(Network* net) {
 	}
 }
 
-
+//Create layer and neurons with one parent until a certain random neuron
+//then the rest with the corresponding part of the other parent, then mutate
 Network GA::cross_over(Network first_parent, Network second_parent) {
 	vector< vector< vector <double> > > first_off_spring;
 	vector< vector< vector <double> > > second_off_spring;
@@ -130,6 +127,8 @@ Network GA::cross_over(Network first_parent, Network second_parent) {
 	}
 	return result;
 }
+
+// selects using tournament selection the parents and then breeds
 void GA::selection(vector<Network> population) {
 	int i = 0;
 	vector<Network> new_pop;
@@ -164,6 +163,7 @@ void GA::selection(vector<Network> population) {
 }
 
 
+// Run function to write results 
 Network GA::evolve() {
 	ofstream myfile;
 	clock_t begin, end, t_begin, t_end;

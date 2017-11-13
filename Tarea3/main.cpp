@@ -17,7 +17,6 @@ using namespace std;
 int main() {
 
 	TrainingSet ts = read_seeds("seeds/seeds.txt", 210);
-	//TrainingSet ts_2 = read_seeds("seeds_firsthalf.txt", 105);
 	TrainingSet test_set = read_seeds("seeds/seeds_secondhalf.txt",105);
 
 	vector<int> topology = {7, 5, 3};

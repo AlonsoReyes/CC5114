@@ -1,10 +1,9 @@
-
 #include "GA.h"
 
 
 using namespace std;
 
-
+// struct needed to sort vector
 struct pair_comp
 {
     bool operator()(const pair<Network, double> &a, const pair<Network, double>  &b) { return (a.second > b.second); }
@@ -22,11 +21,12 @@ GA::GA(double goal, double rate, int pop_size, int iterations,
 }
 
 
-
+// result is the accuracy on the testing set
 double GA::fitness(Network* net) {
 	return net->evaluateNet(this->test_data);
 }
 
+// chooses the one with fitness closest to the random value 
 int GA::choose_random(vector< pair <Network, double> > individuals) {
 	double R = random_double(0, 1);
 	if( R < individuals[0].second)
@@ -38,6 +38,7 @@ int GA::choose_random(vector< pair <Network, double> > individuals) {
 	return individuals.size() - 1;
 }
 
+// Semi-randomly chooses parents using function choose_random
 vector<Network> GA::select_parents(vector< pair<Network, double > > pop){
 	int i = 0;
 	vector<Network> parents;
@@ -51,7 +52,8 @@ vector<Network> GA::select_parents(vector< pair<Network, double > > pop){
 	return parents;
 }
 
-
+// has 5 options, multiply by a factor, sum or substract one, multiply by -1
+// change the weight for a random one or change the whole neuron.
 void GA::mutate(Network* net) {
 	int option;
 	int random_layer;
@@ -137,13 +139,12 @@ Network GA::cross_over(Network first_parent, Network second_parent) {
 }
 
 
+// choose random parents from the ones with best fitness
 void GA::reproduct(vector<Network> selected_indiv) {
 	int i = 0;
 	vector<Network> new_pop;
 	
 	while(i < selected_indiv.size()) {
-		//Network first_parent = selected_indiv[i % selected_indiv.size()];
-		//Network second_parent = selected_indiv[(i + 1) % selected_indiv.size()];
 		Network first_parent = selected_indiv[random_int(0, selected_indiv.size() - 1)];
 		Network second_parent = selected_indiv[random_int(0, selected_indiv.size() - 1)];
 		
@@ -153,6 +154,7 @@ void GA::reproduct(vector<Network> selected_indiv) {
 	this->population = new_pop;
 }
 
+// selects the mating pool
 vector<Network> GA::selection(vector<Network> population) {
 	vector< pair<Network, double> > individual_fit;
 	double total_fit = 0.0;
@@ -192,6 +194,7 @@ vector<Network> GA::selection(vector<Network> population) {
 
 
 
+// Run function, writes results too
 Network GA::evolve() {
 	ofstream myfile;
 	clock_t begin, end, t_begin, t_end;

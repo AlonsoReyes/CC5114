@@ -11,7 +11,7 @@
 #include <utility>
 #include <string.h>
 #include <limits>
-#include "NeuralNetwork.cpp"
+#include "Network/NeuralNetwork.cpp"
 
 using namespace std;
 

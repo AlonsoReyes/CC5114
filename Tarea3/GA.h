@@ -13,7 +13,7 @@
 #include <limits>
 #include <ctime>
 #include <iterator>
-#include "NeuralNetwork.cpp"
+#include "Network/NeuralNetwork.cpp"
 
 
 using namespace std;
