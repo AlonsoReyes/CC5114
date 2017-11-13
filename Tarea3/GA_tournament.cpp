@@ -59,7 +59,7 @@ void GA::mutate(Network* net) {
 	weights = neurons[random_neuron].getWeights();
 	random_weight = random_int(0, weights.size() - 1);
 
-	option = random_int(0, 4);
+	option = random_int(0, 5);
 
 	if(option == 0) {
 		net->changeNeuronWeight(random_layer, random_neuron, random_weight, weights[random_weight]*random_double(0.5, 1.5));
